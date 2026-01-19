@@ -6,15 +6,22 @@ branding:
   color: 'green'
 
 inputs:
-  push:
-    description: 'Push the image to the configured registry.'
+  # CLI flags
+  generate:
+    description: 'Whether to generate Dockerfile(s) first'
     required: false
-    default: 'false'
+    default: 'true'
   # TODO: Change this to `version` in a breaking change
   tag:
     description: 'Tag of the silverback docker images.'
     required: false
     default: 'latest'
+  push:
+    description: 'Push the image to the configured registry.'
+    required: false
+    default: 'false'
+
+  # Docker registry config
   registry:
     description: 'The registry location you want to push to.'
     required: false
@@ -48,10 +55,8 @@ runs:
         echo "TAG_BASE='${{ inputs.registry }}/$LOWERCASE_REPO_NAME'" >> $GITHUB_ENV
       shell: bash
 
-    # TODO: Can this be done using a Docker image instead?
-    - name: Install Silverback
-      run: pip install "silverback>=0.7.22"
-      shell: bash
+    - name: Setup Python tool
+      uses: astral-sh/setup-uv@v7
 
     - name: Log into GitHub Container Registry
       if: inputs.push == 'true'
@@ -62,5 +67,10 @@ runs:
         password: ${{ inputs.password }}
 
     - name: Build and Push
-      run: silverback build --generate --tag-base ${{ env.TAG_BASE }} --version ${{ inputs.tag }} ${{ inputs.push == 'true' && '--push' || ''}}
       shell: bash
+      run: |
+        uvx silverback build \
+          --tag-base ${{ env.TAG_BASE }} \
+          --version ${{ inputs.tag }} \
+          ${{ inputs.generate == 'true' && '--generate' || ''}} \
+          ${{ inputs.push == 'true' && '--push' || ''}}
