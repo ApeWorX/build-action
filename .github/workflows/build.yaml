@@ -15,7 +15,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: set up test
         run: curl https://raw.githubusercontent.com/ApeWorX/silverback/refs/heads/main/example.py > bot.py
@@ -30,7 +30,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: set up test
         run: |
@@ -47,7 +47,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: set up test
         run: |
@@ -65,7 +65,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - id: must-fail
         name: run action
@@ -82,7 +82,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: set up test
         run: curl https://raw.githubusercontent.com/ApeWorX/silverback/refs/heads/main/example.py > bot.py
@@ -99,4 +99,19 @@ jobs:
         if: steps.must-fail.outcome == 'success'
         run: exit 1
 
+  test-sdk-verison:
+    name: with pinned sdk version
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
 
+      - name: set up test
+        run: curl https://raw.githubusercontent.com/ApeWorX/silverback/refs/heads/main/example.py > bot.py
+        shell: bash
+
+      - name: run action
+        uses: ./
+        with:
+          sdk: latest
