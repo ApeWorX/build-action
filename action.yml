@@ -16,6 +16,10 @@ inputs:
     description: 'Tag of the silverback docker images.'
     required: false
     default: 'latest'
+  sdk:
+    description: 'Version of Silverback to use for base image when building.'
+    required: false
+    default: 'stable'
   push:
     description: 'Push the image to the configured registry.'
     required: false
@@ -70,6 +74,7 @@ runs:
       shell: bash
       run: |
         uvx silverback build \
+          --sdk ${{ inputs.sdk }} \
           --tag-base ${{ env.TAG_BASE }} \
           --version ${{ inputs.tag }} \
           ${{ inputs.generate == 'true' && '--generate' || ''}} \
