@@ -1,4 +1,4 @@
-# Silverbackltd Build Workflow
+# Silverback Build Workflow
 
 Automatically generate dockerfiles (unless already committed), build docker images and push those images to a configured container registry like GHCR
 
@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build Image
-        uses: SilverbackLtd/build-action@v1
+        uses: ApeWorX/build-action@v1
         with:
             push: true
             tag: v1.0.0
@@ -46,7 +46,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build Image
-        uses: SilverbackLtd/build-action@v1
+        uses: ApeWorX/build-action@v1
         with:
             push: true
             tag: v1.0.0
@@ -68,5 +68,5 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build Image
-        uses: SilverbackLtd/build-action@v1
+        uses: ApeWorX/build-action@v1
 ```

@@ -1,5 +1,5 @@
-name: Silverbackltd Build Action
-author: 'ApeWorX Ltd.'
+name: Silverback Build Action
+author: 'The ApeWorX Collective'
 description: 'A GitHub Action to build docker images for a silverback repository and push to a container registry'
 branding:
   icon: 'check-circle'
